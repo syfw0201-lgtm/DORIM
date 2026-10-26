@@ -1,0 +1,948 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>كافيه دوريم | DORIM Cafe</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+  /* ============================================
+     DORIM Cafe — Midnight Indigo & Warm Amber Gold Palette
+     ============================================ */
+  :root{
+    --bg-main:       #F8FAFC; /* Slate Soft Off-White */
+    --bg-card:       #FFFFFF;
+    --bg-card-hover: #F1F5F9;
+    --text-dark:     #0F172A; /* Deep Midnight Charcoal */
+    --text-muted:    #475569; /* Muted Slate Gray */
+    --indigo-light:  #818CF8; /* Soft Indigo */
+    --indigo-main:   #1E1B4B; /* Luxury Midnight Indigo */
+    --gold-main:     #D97706; /* Warm Amber Gold */
+    --gold-glow:     rgba(217, 119, 6, 0.2);
+    --shadow-lux:    0 15px 40px -15px rgba(15, 23, 42, 0.08);
+    --radius:        22px;
+  }
+
+  *{ 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: "Cairo", "Segoe UI", "Tahoma", system-ui, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body{
+    background:
+      radial-gradient(1200px 700px at 80% -10%, rgba(30, 27, 75, 0.07), transparent 60%),
+      radial-gradient(900px 600px at 10% 110%, rgba(217, 119, 6, 0.08), transparent 60%),
+      var(--bg-main);
+    color: var(--text-dark);
+    min-height: 100vh;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg-main);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #CBD5E1;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--indigo-main);
+  }
+
+  /* Eyebrow Badge */
+  .eyebrow{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    color: var(--indigo-main);
+    background: rgba(30, 27, 75, 0.06);
+    border: 1px solid rgba(30, 27, 75, 0.15);
+    padding: 8px 20px;
+    border-radius: 100px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    backdrop-filter: blur(8px);
+  }
+  .eyebrow .dot{
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--gold-main);
+    box-shadow: 0 0 8px var(--gold-main);
+  }
+
+  /* Section Headings */
+  .section-head{
+    text-align: center;
+    margin-bottom: clamp(26px, 4vw, 46px);
+  }
+  .section-head h2{
+    margin-top: 18px;
+    font-size: clamp(1.7rem, 4.4vw, 2.85rem);
+    font-weight: 800;
+    letter-spacing: -.02em;
+    color: var(--text-dark);
+    line-height: 1.3;
+  }
+  .section-head h2 span{
+    display: block;
+    font-size: clamp(.95rem, 2.2vw, 1.15rem);
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--gold-main);
+    margin-top: 10px;
+  }
+  .section-head p{
+    max-width: 640px;
+    margin: 16px auto 0;
+    color: var(--text-muted);
+    font-size: clamp(.95rem, 2.1vw, 1.05rem);
+  }
+
+  /* Main Card styling */
+  .location-card{
+    display: grid;
+    grid-template-columns: 1.05fr .95fr;
+    gap: clamp(20px, 3vw, 34px);
+    background: #FFFFFF;
+    border: 1px solid rgba(30, 27, 75, 0.12);
+    border-radius: var(--radius);
+    padding: clamp(20px, 3.4vw, 40px);
+    box-shadow: var(--shadow-lux);
+    position: relative;
+    overflow: hidden;
+  }
+  .location-card::before{
+    content: "";
+    position: absolute;
+    inset-inline-end: -90px;
+    top: -90px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(217, 119, 6, 0.15), transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Address block */
+  .address-block{ display: flex; flex-direction: column; gap: 22px; }
+
+  .pin{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-main);
+  }
+  .pin svg{
+    width: 20px; height: 20px;
+    flex: 0 0 auto;
+    color: var(--gold-main);
+  }
+
+  .addr-ar{
+    font-size: clamp(1.15rem, 2.9vw, 1.5rem);
+    font-weight: 800;
+    color: var(--text-dark);
+    line-height: 1.65;
+    padding-inline-start: 18px;
+    border-inline-start: 4px solid var(--gold-main);
+  }
+  .addr-en{
+    direction: ltr;
+    text-align: left;
+    font-size: clamp(.95rem, 2.2vw, 1.06rem);
+    font-weight: 600;
+    color: var(--text-muted);
+    line-height: 1.75;
+    letter-spacing: .005em;
+    padding-inline-start: 18px;
+    border-inline-start: 2px solid rgba(30, 27, 75, 0.15);
+  }
+  .addr-en .country{
+    display: block;
+    color: var(--gold-main);
+    font-weight: 700;
+    font-size: .86em;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .divider{
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(30, 27, 75, 0.15) 20%, rgba(30, 27, 75, 0.15) 80%, transparent);
+  }
+
+  .meta{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .chip{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #F8FAFC;
+    border: 1px solid rgba(30, 27, 75, 0.12);
+    color: var(--text-dark);
+    font-size: .82rem;
+    font-weight: 600;
+    padding: 9px 15px;
+    border-radius: 100px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  }
+
+  /* CTA Buttons */
+  .btn-map{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    padding: 17px 26px;
+    border: 1px solid var(--indigo-main);
+    border-radius: 16px;
+    background: linear-gradient(135deg, #1E1B4B 0%, #312E81 50%, #3730A3 100%);
+    color: #FFFFFF;
+    font-family: inherit;
+    font-size: clamp(.98rem, 2.3vw, 1.08rem);
+    font-weight: 800;
+    letter-spacing: .01em;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 10px 25px -5px rgba(30, 27, 75, 0.35);
+    transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-map::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform .7s ease;
+  }
+  .btn-map:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 16px 35px -5px rgba(30, 27, 75, 0.45);
+    filter: brightness(1.05);
+  }
+  .btn-map:hover::after{ transform: translateX(120%); }
+  .btn-map:active{ transform: translateY(-1px) scale(.995); }
+
+  .note{
+    font-size: .8rem;
+    color: var(--text-muted);
+    text-align: center;
+    opacity: .85;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  /* Map Container */
+  .map-wrap{
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(30, 27, 75, 0.12);
+    background: #E2E8F0;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.5), 0 12px 30px -20px rgba(0,0,0,0.08);
+    min-height: 320px;
+    display: flex;
+  }
+  .map-wrap iframe{
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    border: 0;
+    display: block;
+    filter: saturate(1.05) opacity(0.95);
+  }
+  .map-badge{
+    position: absolute;
+    top: 14px;
+    inset-inline-start: 14px;
+    background: rgba(30, 27, 75, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #FFFFFF;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border-radius: 100px;
+    backdrop-filter: blur(6px);
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .foot-note{
+    margin-top: clamp(20px, 3vw, 30px);
+    text-align: center;
+    font-size: .84rem;
+    color: var(--text-muted);
+  }
+  .foot-note strong{ color: var(--indigo-main); }
+
+  /* Interactive Elements Styling */
+  .menu-btn {
+    transition: all 0.3s ease;
+    background: #FFFFFF;
+    border: 1px solid rgba(30, 27, 75, 0.15);
+    color: var(--text-dark);
+  }
+  .menu-btn:hover {
+    border-color: var(--gold-main);
+    color: var(--gold-main);
+  }
+  .menu-btn.active {
+    background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%);
+    color: #FFFFFF;
+    border-color: var(--indigo-main);
+    box-shadow: 0 6px 20px rgba(30, 27, 75, 0.25);
+  }
+
+  .menu-card {
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid rgba(30, 27, 75, 0.12);
+    background: #FFFFFF;
+  }
+  .menu-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08), var(--gold-glow);
+    border-color: rgba(217, 119, 6, 0.4);
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 900px){
+    .location-card{
+      grid-template-columns: 1fr;
+    }
+    .map-wrap{ min-height: 300px; order: 2; }
+    .address-block{ order: 1; }
+  }
+
+  @media (max-width: 520px){
+    .location-card{
+      border-radius: 18px;
+      padding: 20px 16px 22px;
+      gap: 18px;
+    }
+    .addr-ar{ font-size: 1.08rem; }
+    .addr-en{ font-size: .92rem; }
+    .map-wrap{ min-height: 260px; border-radius: 14px; }
+    .map-wrap iframe{ min-height: 260px; }
+    .btn-map{ padding: 16px 18px; border-radius: 14px; }
+    .chip{ font-size: .78rem; padding: 8px 12px; }
+    .eyebrow{ font-size: .68rem; padding: 7px 14px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ================= HEADER / NAVIGATION ================= -->
+  <header class="sticky top-0 z-50 backdrop-blur-xl bg-[#F8FAFC]/90 border-b border-slate-200 transition-all duration-300" id="navbar">
+    <div class="max-w-6xl mx-auto px-4 py-3.5 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-[#1E1B4B] via-[#312E81] to-[#D97706] text-white flex items-center justify-center font-black text-xl shadow-md group-hover:scale-105 transition-transform">
+          D
+        </div>
+        <div>
+          <span class="text-xl font-black text-[#0F172A] tracking-wider block leading-none">DORIM</span>
+          <span class="text-[10px] text-[#D97706] font-bold tracking-[0.2em] block mt-1 uppercase">DORIM CAFE & LOUNGE</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-bold text-[#0F172A]">
+        <a href="#about" class="hover:text-[#D97706] transition-colors">عن دوريم</a>
+        <a href="#menu" class="hover:text-[#D97706] transition-colors">قائمة المشروبات</a>
+        <a href="#reviews" class="hover:text-[#D97706] transition-colors">آراء الزوار</a>
+        <a href="#location" class="hover:text-[#D97706] transition-colors">موقعنا</a>
+      </nav>
+
+      <!-- Action Button & Status -->
+      <div class="flex items-center gap-3">
+        <div id="status-badge" class="hidden sm:inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-[#1E1B4B]/10 text-[#1E1B4B] border border-[#1E1B4B]/20">
+          <span class="w-2 h-2 rounded-full bg-[#D97706] animate-pulse"></span>
+          مفتوح الآن
+        </div>
+        
+        <a href="#location" class="hidden xs:inline-flex px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#1E1B4B] to-[#312E81] text-white text-xs font-black hover:brightness-110 transition-all shadow-md">
+          زورنا اليوم
+        </a>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-[#0F172A] hover:bg-slate-200" aria-label="Toggle Navigation">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-4 py-3 space-y-2">
+      <a href="#about" class="block py-2 text-sm font-bold text-[#0F172A] hover:text-[#D97706]">عن دوريم</a>
+      <a href="#menu" class="block py-2 text-sm font-bold text-[#0F172A] hover:text-[#D97706]">قائمة المشروبات</a>
+      <a href="#reviews" class="block py-2 text-sm font-bold text-[#0F172A] hover:text-[#D97706]">آراء الزوار</a>
+      <a href="#location" class="block py-2 text-sm font-bold text-[#0F172A] hover:text-[#D97706]">موقعنا</a>
+    </div>
+  </header>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section id="about" class="py-12 md:py-24 max-w-6xl mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+      
+      <!-- Hero Text Content -->
+      <div class="space-y-6 text-center md:text-right">
+        <span class="eyebrow mx-auto md:mx-0">
+          <span class="dot"></span> أهلاً بك في كافيه دوريم · DORIM
+        </span>
+        
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0F172A] leading-tight">
+          عالم من الفخامة والتميز <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#1E1B4B] via-[#312E81] to-[#D97706]">مع كل فنجان قهوة</span>
+        </h1>
+        
+        <p class="text-[#475569] text-base md:text-lg max-w-xl mx-auto md:mx-0 leading-relaxed">
+          نقدم لك تجربة استثنائية وعصرية في عالم القهوة المختصة والحلويات الفاخرة بميت غمر. المكان المثالي للاستلقاء، اللقاءات الراقية، وتذوق أجمل اللحظات.
+        </p>
+
+        <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2">
+          <a href="#menu" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-[#1E1B4B] to-[#312E81] text-white font-black text-sm hover:brightness-110 transition-all shadow-lg">
+            استكشف القائمة ☕
+          </a>
+          <a href="#location" class="px-7 py-3.5 rounded-xl bg-white text-[#0F172A] border border-slate-300 font-bold text-sm hover:border-[#D97706] transition-colors shadow-sm">
+            عنوان المقر 📍
+          </a>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200 max-w-md mx-auto md:mx-0">
+          <div>
+            <div class="text-2xl font-black text-[#1E1B4B]">100%</div>
+            <div class="text-xs text-[#475569] font-semibold">بن مختص فاخر</div>
+          </div>
+          <div>
+            <div class="text-2xl font-black text-[#D97706]">4.9 ★</div>
+            <div class="text-xs text-[#475569] font-semibold">تقييم زوارنا</div>
+          </div>
+          <div>
+            <div class="text-2xl font-black text-[#1E1B4B]">شارع 26 يوليو</div>
+            <div class="text-xs text-[#475569] font-semibold">ميت غمر</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual Gallery / Image Accent -->
+      <div class="relative flex justify-center">
+        <div class="w-full max-w-md h-[360px] sm:h-[440px] rounded-3xl overflow-hidden shadow-xl relative border border-slate-200">
+          <img 
+            src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80" 
+            alt="DORIM Cafe Atmosphere" 
+            class="w-full h-full object-cover"
+            loading="eager"
+            onerror="this.src='https://placehold.co/800x800/1E1B4B/FFFFFF?text=DORIM+Cafe'"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A]/90 via-transparent to-transparent"></div>
+          <div class="absolute bottom-6 right-6 left-6 text-white text-right">
+            <span class="bg-gradient-to-r from-[#D97706] to-[#B45309] text-white text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider">الأجواء العصرية الراقية</span>
+            <h3 class="text-xl font-bold mt-2 text-white">تصميم عصري ينبض بالفخامة والهدوء</h3>
+            <p class="text-xs text-slate-200 mt-1">شارع 26 يوليو — أمام سلم المنصورة</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= MENU SECTION ================= -->
+  <section id="menu" class="py-16 bg-slate-100/70 border-y border-slate-200">
+    <div class="max-w-6xl mx-auto px-4">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <span class="eyebrow mx-auto"><span class="dot"></span> قائمتنا المميزة</span>
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-[#0F172A] mt-3">
+          مشروبات وحلويات DORIM المميزة
+        </h2>
+        <p class="text-[#475569] text-sm sm:text-base mt-2">
+          اختر من بين مجموعة واسعة من المشروبات المبتكرة، القهوة المختصة، والحلويات الطازجة
+        </p>
+      </div>
+
+      <!-- Menu Categories Filter Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-3 mb-12">
+        <button class="menu-btn active px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold" data-category="all">
+          الكل ✨
+        </button>
+        <button class="menu-btn px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold" data-category="hot-coffee">
+          قهوة ساخنة ☕
+        </button>
+        <button class="menu-btn px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold" data-category="cold-coffee">
+          قهوة باردة 🧊
+        </button>
+
+        <button class="menu-btn px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold" data-category="desserts">
+          الحلويات 🍰
+        </button>
+      </div>
+
+      <!-- Menu Items Grid -->
+      <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- JS dynamically populates items here -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= REVIEWS SECTION ================= -->
+  <section id="reviews" class="py-16 md:py-24 max-w-6xl mx-auto px-4">
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <span class="eyebrow mx-auto"><span class="dot"></span> آراء عملائنا</span>
+      <h2 class="text-2xl sm:text-4xl font-extrabold text-[#0F172A] mt-3">
+        ماذا يقول زوار كافيه دوريم؟
+      </h2>
+      <p class="text-[#475569] text-sm sm:text-base mt-2">
+        سعادتكم ورضاكم هما سر استمرارنا ودافعنا لتقديم الأفضل دائماً
+      </p>
+    </div>
+
+    <!-- Reviews Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="reviews-container">
+      <!-- Cards rendered via JavaScript -->
+    </div>
+
+    <!-- Add Review CTA -->
+    <div class="mt-10 text-center">
+      <button id="add-review-btn" class="px-7 py-3.5 rounded-xl bg-white border border-slate-300 text-[#0F172A] font-bold text-xs sm:text-sm shadow-sm hover:border-[#D97706] transition-all">
+        ✍️ أضف تقييمك الخاص
+      </button>
+    </div>
+  </section>
+
+  <!-- ================= LOCATION SECTION ================= -->
+  <section class="location-section py-8 max-w-6xl mx-auto px-4" id="location" aria-labelledby="loc-title">
+
+    <!-- Heading -->
+    <div class="section-head">
+      <span class="eyebrow"><span class="dot"></span> موقعنا · Find Us</span>
+      <h2 id="loc-title">
+        تعال زورنا في <span>كافيه دوريم · DORIM</span>
+      </h2>
+      <p>في قلب ميت غمر — قهوة مختصة وأجواء دافئة تنتظرك.</p>
+    </div>
+
+    <!-- Card -->
+    <div class="location-card">
+
+      <!-- Address column -->
+      <div class="address-block">
+
+        <span class="pin">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          العنوان الرسمي · Official Address
+        </span>
+
+        <!-- Arabic address -->
+        <p class="addr-ar" lang="ar" dir="rtl">
+          ميت غمر، شارع 26 يوليو،<br>
+          أمام سلم المنصورة،<br>
+          محافظة الدقهلية، مصر.
+        </p>
+
+        <!-- English address -->
+        <p class="addr-en" lang="en" dir="ltr">
+          26th of July Street, In front of Mansoura Stairs,<br>
+          Mit Ghamr, Dakahlia, Egypt.
+          <span class="country">Egypt · Egypt</span>
+        </p>
+
+        <div class="divider" role="presentation"></div>
+
+        <!-- Quick info chips -->
+        <div class="meta">
+          <span class="chip"><span class="ic">📍</span> ميت غمر · Mit Ghamr</span>
+          <span class="chip"><span class="ic">🛣️</span> شارع 26 يوليو · 26th July St</span>
+          <span class="chip"><span class="ic">🇪🇬</span> مصر · Egypt</span>
+          <span class="chip"><span class="ic">💰</span> الأسعار بالجنيه المصري</span>
+        </div>
+
+        <!-- CTA -->
+        <a class="btn-map"
+           href="https://www.google.com/maps/search/?api=1&query=DORIM+Cafe%2C+26th+July+Street%2C+Mit+Ghamr%2C+Dakahlia%2C+Egypt"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="افتح موقع كافيه دوريم على خرائط جوجل">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          افتح الموقع على الخريطة
+        </a>
+
+        <span class="note">🔗 يفتح في تطبيق خرائط جوجل مباشرةً</span>
+
+      </div>
+
+      <!-- Map column -->
+      <div class="map-wrap">
+        <span class="map-badge">Live Map</span>
+        <iframe
+          title="موقع كافيه دوريم DORIM على خرائط جوجل — ميت غمر، شارع 26 يوليو، أمام سلم المنصورة"
+          src="https://maps.google.com/maps?q=26th%20July%20Street%2C%20Mit%20Ghamr%2C%20Dakahlia%2C%20Egypt&z=16&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+    </div>
+
+    <!-- Footer line -->
+    <p class="foot-note">
+      جميع الأسعار بالجنيه المصري <strong>(EGP)</strong> — الأسعار والموقع داخل جمهورية مصر العربية.
+    </p>
+
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-white text-[#0F172A] mt-20 border-t border-slate-200">
+    <div class="max-w-6xl mx-auto px-4 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        
+        <!-- Col 1: Brand Info -->
+        <div class="space-y-4 md:col-span-2">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-[#1E1B4B] via-[#312E81] to-[#D97706] text-white flex items-center justify-center font-black text-xl">
+              D
+            </div>
+            <span class="text-2xl font-extrabold tracking-tight text-[#0F172A]">DORIM CAFE</span>
+          </div>
+          <p class="text-sm text-[#475569] leading-relaxed max-w-md">
+            مقهاك المفضل في ميت غمر. نمتلك شغف تقديم أفضل أنواع القهوة المختصة والحلويات بأعلى مستويات الجودة والأناقة.
+          </p>
+        </div>
+
+        <!-- Col 2: Hours -->
+        <div class="space-y-3">
+          <h4 class="font-bold text-[#1E1B4B] text-sm uppercase tracking-wider">ساعات العمل</h4>
+          <ul class="text-xs space-y-2 text-[#475569]">
+            <li class="flex justify-between">
+              <span>جميع أيام الأسبوع:</span>
+              <span class="font-bold text-[#0F172A]">08:00 ص - 01:00 ص</span>
+            </li>
+            <li class="flex justify-between">
+              <span>الجمعة:</span>
+              <span class="font-bold text-[#0F172A]">01:00 م - 02:00 ص</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Quick Links -->
+        <div class="space-y-3">
+          <h4 class="font-bold text-[#1E1B4B] text-sm uppercase tracking-wider">تواصل معنا</h4>
+          <p class="text-xs text-[#475569]">ميت غمر، شارع 26 يوليو - أمام سلم المنصورة.</p>
+          <div class="pt-2 flex gap-3">
+            <a href="https://www.facebook.com" target="_blank" rel="noopener" class="w-8 h-8 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-xs text-[#1E1B4B] hover:bg-[#1E1B4B] hover:text-white transition-colors" aria-label="Facebook">FB</a>
+            <a href="https://www.instagram.com" target="_blank" rel="noopener" class="w-8 h-8 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-xs text-[#1E1B4B] hover:bg-[#1E1B4B] hover:text-white transition-colors" aria-label="Instagram">IG</a>
+            <a href="https://wa.me/201000000000" target="_blank" rel="noopener" class="w-8 h-8 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-xs text-[#1E1B4B] hover:bg-[#1E1B4B] hover:text-white transition-colors" aria-label="WhatsApp">WA</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="border-t border-slate-200 pt-6 text-center text-xs text-[#475569]/80">
+        © 2026 كافيه دوريم (DORIM Cafe). جميع الحقوق محفوظة — ميت غمر، الدقهلية، مصر 🇪🇬
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= ADD REVIEW MODAL ================= -->
+  <div id="review-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+      <button id="close-modal" class="absolute top-4 left-4 text-[#475569] hover:text-[#0F172A] font-bold text-lg">✕</button>
+      
+      <h3 class="text-xl font-bold text-[#0F172A] mb-1">شاركنا رأيك في DORIM Cafe</h3>
+      <p class="text-xs text-[#475569] mb-5">انطباعك يسعدنا ويساعدنا على التطوير المستمر.</p>
+
+      <form id="review-form" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-[#0F172A] mb-1">الاسم الكريم</label>
+          <input type="text" id="reviewer-name" required placeholder="أدخل اسمك" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-[#F8FAFC] text-[#0F172A] text-sm focus:outline-none focus:border-[#1E1B4B]">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-[#0F172A] mb-1">التقييم</label>
+          <select id="reviewer-rating" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-[#F8FAFC] text-[#0F172A] text-sm focus:outline-none focus:border-[#1E1B4B]">
+            <option value="5">⭐⭐⭐⭐⭐ (5/5)</option>
+            <option value="4">⭐⭐⭐⭐ (4/5)</option>
+            <option value="3">⭐⭐⭐ (3/5)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-[#0F172A] mb-1">تعليقك</label>
+          <textarea id="reviewer-text" rows="3" required placeholder="اكتب ملاحظاتك عن القهوة أو المكان..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-[#F8FAFC] text-[#0F172A] text-sm focus:outline-none focus:border-[#1E1B4B]"></textarea>
+        </div>
+
+        <button type="submit" class="w-full py-3 bg-gradient-to-r from-[#1E1B4B] to-[#312E81] text-white font-black text-sm rounded-xl hover:brightness-110 transition-all shadow-md">
+          إرسال التقييم
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <script>
+    // --- 1. Menu Items Data ---
+    const menuItems = [
+      {
+        id: 1,
+        title: "اسبريسو سينجل / دبل",
+        category: "hot-coffee",
+        price: 35,
+        desc: "استخلاص غني ونكهة فاخرة ممتازة من حبوب بن مختارة بعناية.",
+        img: "https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: 2,
+        title: "لاتيه كافيه (Latte)",
+        category: "hot-coffee",
+        price: 55,
+        desc: "إسبريسو غني مع حليب مبخر بلطف وطبقة رغوة ناعمة جداً.",
+        img: "https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: 3,
+        title: "سبانيش لاتيه بارد",
+        category: "cold-coffee",
+        price: 65,
+        desc: "مزيج متناغم بين القهوة القوية والحليب المكثف المحلى مع الثلج.",
+        img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: 4,
+        title: "كابتشينو دوريم DORIM",
+        category: "hot-coffee",
+        price: 50,
+        desc: "التوازن المكتمل بين قهوة الإسبريسو والحليب والرغوة الغنية.",
+        img: "https://images.unsplash.com/photo-1572442388796-11668ba69e54?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: 5,
+        title: "آيس موكا شوكولاتة",
+        category: "cold-coffee",
+        price: 70,
+        desc: "قهوة مثلجة ممزوجة بالشوكولاتة الفاخرة الكثيفة والكريمة المخفوقة.",
+        img: "https://images.unsplash.com/photo-1568649929103-28ffbefaca1e?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: 6,
+        title: "وافل بلجيكي مع النوتيلا",
+        category: "desserts",
+        price: 75,
+        desc: "وافل ذهبي مقرمش من الخارج وهش من الداخل يُقدم مع شوكولاتة النوتيلا.",
+        img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: 7,
+        title: "تشيز كيك التوت الأزرق",
+        category: "desserts",
+        price: 80,
+        desc: "طبقات من البسكويت الهش والكريمة الغنية مع صوص البلو بيري الطازج.",
+        img: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=500&q=80"
+      }
+    ];
+
+    // --- 2. Initial Reviews Data ---
+    const defaultReviews = [
+      {
+        name: "أحمد المحمدي",
+        rating: 5,
+        comment: "من أجمل وأرقى الكافيهات في شارع 26 يوليو بميت غمر! القهوة ممتازة والأجواء هادئة ولطيفة.",
+        date: "قبل يومين"
+      },
+      {
+        name: "سارة خليل",
+        rating: 5,
+        comment: "المكان شيك جداً والألوان مريحة للعين، والسبانيش لاتيه عندهم في حتة تانية خالص!",
+        date: "قبل أسبوع"
+      },
+      {
+        name: "محمود الشربيني",
+        rating: 5,
+        comment: "موقع ممتاز في شارع 26 يوليو أمام سلم المنصورة مباشرة، والخدمة ممتازة وودودة.",
+        date: "قبل أسبوعين"
+      }
+    ];
+
+    // --- 3. DOM Elements ---
+    const menuGrid = document.getElementById('menu-grid');
+    const categoryBtns = document.querySelectorAll('.menu-btn');
+    const reviewsContainer = document.getElementById('reviews-container');
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const reviewModal = document.getElementById('review-modal');
+    const addReviewBtn = document.getElementById('add-review-btn');
+    const closeModalBtn = document.getElementById('close-modal');
+    const reviewForm = document.getElementById('review-form');
+
+    // Render Menu Items
+    function renderMenu(category = 'all') {
+      menuGrid.innerHTML = '';
+      const filtered = category === 'all' 
+        ? menuItems 
+        : menuItems.filter(item => item.category === category);
+
+      filtered.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'menu-card rounded-2xl overflow-hidden flex flex-col justify-between p-4';
+        card.innerHTML = `
+          <div>
+            <div class="h-44 rounded-xl overflow-hidden mb-3 bg-[#F8FAFC] relative">
+              <img src="${item.img}" alt="${item.title}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy" onerror="this.src='https://placehold.co/500x350/1E1B4B/FFFFFF?text=${encodeURIComponent(item.title)}'">
+            </div>
+            <div class="flex items-start justify-between gap-2 mb-1">
+              <h3 class="font-bold text-[#0F172A] text-base sm:text-lg">${item.title}</h3>
+              <span class="text-[#D97706] font-black text-sm whitespace-nowrap">${item.price} ج.م</span>
+            </div>
+            <p class="text-xs text-[#475569] leading-relaxed mb-4">${item.desc}</p>
+          </div>
+          <div class="pt-3 border-t border-slate-200 flex items-center justify-between text-xs font-semibold text-[#475569]">
+            <span>طازج ومعد فوراً</span>
+            <span class="text-[#1E1B4B]">DORIM Cafe</span>
+          </div>
+        `;
+        menuGrid.appendChild(card);
+      });
+    }
+
+    // Filter Button Clicks
+    categoryBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        categoryBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderMenu(btn.dataset.category);
+      });
+    });
+
+    // --- 5. Render Reviews ---
+    function renderReviews(reviews) {
+      reviewsContainer.innerHTML = '';
+      reviews.forEach(rev => {
+        const stars = '★'.repeat(rev.rating) + '☆'.repeat(5 - rev.rating);
+        const card = document.createElement('div');
+        card.className = 'bg-white border border-slate-200 p-5 rounded-2xl shadow-sm flex flex-col justify-between hover:border-[#1E1B4B]/50 transition-colors';
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="font-extrabold text-[#0F172A] text-sm">${rev.name}</span>
+              <span class="text-[#D97706] text-xs tracking-widest">${stars}</span>
+            </div>
+            <p class="text-xs sm:text-sm text-[#475569] leading-relaxed mb-4">"${rev.comment}"</p>
+          </div>
+          <div class="text-[10px] text-[#1E1B4B] font-semibold border-t border-slate-200 pt-2 text-left">
+            ${rev.date}
+          </div>
+        `;
+        reviewsContainer.appendChild(card);
+      });
+    }
+
+    // Store reviews in memory
+    let currentReviews = [...defaultReviews];
+
+    // --- 6. Mobile Menu Toggle ---
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Close mobile menu on link click
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+
+    // --- 7. Modal Functionality ---
+    addReviewBtn.addEventListener('click', () => {
+      reviewModal.classList.remove('hidden');
+      reviewModal.classList.add('flex');
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+      reviewModal.classList.add('hidden');
+      reviewModal.classList.remove('flex');
+    });
+
+    reviewModal.addEventListener('click', (e) => {
+      if (e.target === reviewModal) {
+        reviewModal.classList.add('hidden');
+        reviewModal.classList.remove('flex');
+      }
+    });
+
+    // Handle Review Form Submission
+    reviewForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('reviewer-name').value;
+      const rating = parseInt(document.getElementById('reviewer-rating').value);
+      const comment = document.getElementById('reviewer-text').value;
+
+      currentReviews.unshift({
+        name: name,
+        rating: rating,
+        comment: comment,
+        date: "الآن"
+      });
+
+      renderReviews(currentReviews);
+      reviewForm.reset();
+      reviewModal.classList.add('hidden');
+      reviewModal.classList.remove('flex');
+    });
+
+    // --- 8. Initialize App ---
+    window.addEventListener('DOMContentLoaded', () => {
+      renderMenu('all');
+      renderReviews(currentReviews);
+    });
+  </script>
+</body>
+</html>
